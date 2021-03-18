@@ -1,0 +1,24 @@
+# If using CMD - enable SNMP feature for Windows:
+
+DISM /online /add-capability /capabilityname:SNMP.Client~~~~0.0.1.0
+
+# If using Powershell - enable SNMP feature for Windows:
+
+Enable-WindowsOptionalFeature -online -FeatureName SNMP
+
+# Registry key to monitor all parameters, including physical:
+
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\SNMP\Parameters\RFC1156Agent" /v "sysServices" /t REG_DWORD /d 77 /f
+
+# Registry key to set a desired community string on Windows device:
+
+reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\SNMP\Parameters\ValidCommunities" /v "desired_community_string" /t REG_DWORD /d 4 /f
+
+# Deletes registry key that sets machine to only allow SNMP packets from localhost
+# This sets the machine to allow SNMP packets from any host:
+
+reg delete "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\PermittedManagers" /v "1" /f
+
+
+
+
